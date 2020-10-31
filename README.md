@@ -2,7 +2,7 @@
 The port of Gem - MEGA COMPILATION of "MEGA Tiny Joypad" project from Daniel. Check www.tinyjoypad.com
 
 
-//Porting this gem to www.ESPboy.com project by RomanS
+//Porting to www.ESPboy.com project by RomanS
 
 
 //    >>>>>  MEGA COMPILATION 0015 for ESP8266/ESP8285  GPL v3 <<<<
