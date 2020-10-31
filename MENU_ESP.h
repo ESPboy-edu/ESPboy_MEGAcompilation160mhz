@@ -72,7 +72,7 @@ uint8_t checkKeys(uint8_t param){
   static uint32_t keyreaddelay;
   static uint8_t lastpressed;
   if(millis()-keyreaddelay > 5){
-    keyreaddelay=millis();
+    keyreaddelay = millis();
     lastpressed = myESPboy.getKeys();
   };
   switch(param){

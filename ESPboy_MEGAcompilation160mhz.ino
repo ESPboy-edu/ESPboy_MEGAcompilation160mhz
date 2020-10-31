@@ -102,6 +102,7 @@ WiFi.mode( WIFI_OFF );
 WiFi.forceSleepBegin();
 delay( 1 );
 */
+myESPboy.begin("www.tinyjoypad.com");
 ESP.wdtDisable();
 ESP.wdtFeed();
 delay( 1 );
@@ -119,7 +120,6 @@ pinMode(PIN_UP_BUTTON,INPUT_PULLUP);
 }
 
 void loop() {
-myESPboy.begin("www.tinyjoypad.com");
 ESP.wdtDisable();
 ESP.wdtFeed();
 Serial.println("Mega Compilation");
