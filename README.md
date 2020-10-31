@@ -1,5 +1,5 @@
 # ESPboy_MEGAcompilation160mhz
-# Porting to www.ESPboy.com project by RomanS
+Porting to www.ESPboy.com project by RomanS
 
 MEGA COMPILATION of "MEGA Tiny Joypad" project from Daniel. 
 
