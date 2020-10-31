@@ -71,28 +71,28 @@ void myDelayus(uint16_t del) {
 uint8_t checkKeys(uint8_t param){
   static uint32_t keyreaddelay;
   static uint8_t lastpressed;
-  if(millis()-keyreaddelay > 10){
+  if(millis()-keyreaddelay > 5){
     keyreaddelay=millis();
-    keyreaddelay = myESPboy.getKeys();
+    lastpressed = myESPboy.getKeys();
   };
   switch(param){
     case 1: 
-      return(!(myESPboy.getKeys()&PAD_LEFT));
+      return(!(lastpressed&PAD_LEFT));
       break;
     case 2:
-      return(!(myESPboy.getKeys()&PAD_RIGHT));
+      return(!(lastpressed&PAD_RIGHT));
       break;
     case 3:
-      return(!(myESPboy.getKeys()&PAD_DOWN));
+      return(!(lastpressed&PAD_DOWN));
       break;
     case 4:
-      return(!(myESPboy.getKeys()&PAD_UP));
+      return(!(lastpressed&PAD_UP));
       break;
     case 5:
-      return((myESPboy.getKeys()&PAD_ACT || myESPboy.getKeys()&PAD_ESC)?1:0);
+      return((lastpressed&PAD_ACT || lastpressed&PAD_ESC)?1:0);
       break;
     case 6:
-      return((!(myESPboy.getKeys()&PAD_ACT)) && (!(myESPboy.getKeys()&PAD_ESC)))?1:0;
+      return( !(lastpressed&PAD_ACT) && !(lastpressed&PAD_ESC) )?1:0;
       break;
     default:
       break;
