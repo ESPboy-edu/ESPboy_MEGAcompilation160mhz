@@ -18,14 +18,16 @@ void ESPboyRender::init(){
 
 void ESPboyRender::display(){
   static uint16_t oBuffer[128*16];
+  bool flagFirstStart = true;
   static uint8_t currentDataByte;
   static uint16_t foregroundColor, backgroundColor, xPos, yPos, kPos, kkPos, addr;
+
 
   //foregroundColor = LHSWAP((uint16_t)TFT_YELLOW);
   //backgroundColor = LHSWAP((uint16_t)TFT_BLACK);
   
-  foregroundColor = colors[foregroundclr];
-  backgroundColor = colors[backgroundclr];
+  foregroundColor = LHSWAP(colors[foregroundclr]);
+  backgroundColor = LHSWAP(colors[backgroundclr]);
   
   for(kPos = 0; kPos<4; kPos++){  //if exclude this 4 parts screen devision and process all the big oBuffer, EPS8266 resets (
     kkPos = kPos<<1;

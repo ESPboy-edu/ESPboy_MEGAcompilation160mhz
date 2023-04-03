@@ -57,10 +57,19 @@ uint16_t FIRMWARE_VERSION=15;
 #include <ESP8266WiFi.h>
 #include <Wire.h>  
 #include "ESPboyRender.h" 
-#include "ESPboyInit.h"
+#include "lib/ESPboyInit.h"
+#include "lib/ESPboyInit.cpp"
+//#include "lib/ESPboyTerminalGUI.h"
+//#include "lib/ESPboyTerminalGUI.cpp"
+//#include "lib/ESPboyOTA2.h"
+//#include "lib/ESPboyOTA2.cpp"
+
 
 ESPboyInit myESPboy;
+//ESPboyTerminalGUI *terminalGUIobj = NULL;
+//ESPboyOTA2 *OTA2obj = NULL;
 ESPboyRender display(&myESPboy.tft);
+
 
 #include "MENU_ESP.h"
 #include "TESTMOD/JOY_TESTER_ESP.h"
@@ -96,13 +105,22 @@ uint8_t SLIDE_POS;
 
 
 void setup() {
+
+//Serial.begin(115200);
 /*
-Serial.begin(115200);
 WiFi.mode( WIFI_OFF );
 WiFi.forceSleepBegin();
 delay( 1 );
 */
 myESPboy.begin("www.tinyjoypad.com");
+
+
+//Check OTA2
+//if (myESPboy.getKeys()&PAD_ACT || myESPboy.getKeys()&PAD_ESC) { 
+//     terminalGUIobj = new ESPboyTerminalGUI(&myESPboy.tft, &myESPboy.mcp);
+//     OTA2obj = new ESPboyOTA2(terminalGUIobj);
+//}
+
 ESP.wdtDisable();
 ESP.wdtFeed();
 delay( 1 );
@@ -133,6 +151,7 @@ currentMillis=millis();
 for(uint8_t t=0;t<9;t++){
 ESP_SPLASH((t));
 while((currentMillis-MemMillis)<Frame_Rate_FADE){
+ESP.wdtFeed();
 currentMillis=millis();}
 MemMillis=currentMillis;}
 My_delay_ms(2000);}
@@ -142,6 +161,7 @@ currentMillis=millis();
 for(uint8_t t=0;t<9;t++){
 FADEIN_MENU(t);
 while((currentMillis-MemMillis)<Frame_Rate_FADE){
+ESP.wdtFeed();
 currentMillis=millis();
 }
 MemMillis=currentMillis;

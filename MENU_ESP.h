@@ -97,6 +97,8 @@ uint8_t checkKeys(uint8_t param){
     default:
       break;
     }
+    
+   return (0);
 }
 
 #define TINYJOYPAD_LEFT  (checkKeys(1))
