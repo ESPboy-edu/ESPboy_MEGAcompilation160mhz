@@ -30,13 +30,23 @@ void Sound_JOYTESTER(uint8_t freq_,uint8_t dur);
 
 //public var
 uint8_t X_JOY,Y_JOY;
+uint8_t Cumul_Joy=0;
+uint8_t RET_JOY_BUT=0;
 ////////////////////////////////// main  ////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////  
-void loop_JOYTESTER() {
+uint8_t loop_JOYTESTER() {
 ESP.wdtDisable();
 ESP.wdtFeed();
 X_JOY=29;
 Y_JOY=30;
+
+Tiny_Flip_JOYTESTER();
+while(1){
+ESP.wdtFeed();
+if (BUTTON_UP) {goto NeXt_;}
+My_delay_ms(33);
+}
+NeXt_:;
 while(1){
 if (TINYJOYPAD_RIGHT==0) {X_JOY=(X_JOY<47)?X_JOY+1:47;}else 
 if (TINYJOYPAD_LEFT==0) {X_JOY=(X_JOY>11)?X_JOY-1:11;}else{
@@ -50,7 +60,9 @@ if (Y_JOY>30) {Y_JOY-=1;}
 }
 ESP.wdtFeed();
 Tiny_Flip_JOYTESTER();
+if (Cumul_Joy>=250) {return 1;}
 }
+return 0;
 }
 ////////////////////////////////// main end /////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
@@ -93,8 +105,11 @@ return pgm_read_byte(&JOYTEST[xPASS+(yPASS*128)]);
 
 uint8_t boutton_JOYTESTER(uint8_t xPASS,uint8_t yPASS){
 if (BUTTON_DOWN) {
+RET_JOY_BUT=1;
 return (0xff-blitzSprite_JOYTESTER(97,20,xPASS,yPASS,0,boutton));
 }else{
+RET_JOY_BUT=0;
+Cumul_Joy=0;
 return 0xff;}
 }
 
@@ -109,7 +124,7 @@ for (y = 0; y < 8; y++){
     display.buffer[x+(y*128)] =Joy_JOYTESTER(x,y)|(JOYTEST_JOYTESTER(x,y)&boutton_JOYTESTER(x,y));
     }
 }
-
+if (RET_JOY_BUT==1) {Cumul_Joy++;}
 display.display();
 }
 
