@@ -1,15 +1,10 @@
-uint16_t FIRMWARE_VERSION=15;
-
-
-//Porting this gem to www.ESPboy.com project by RomanS
-
-
-//    >>>>>  MEGA COMPILATION 0015 for ESP8266/ESP8285  GPL v3 <<<<
-//                    >>>>>  MEGA Tiny Joypad  <<<<
-//                   Programmer: Daniel C 2019-2020
+//    >>>>>  MEGA COMPILATION 0018 for ESP8266/ESP8285  GPL v3 <<<<
+//                    >>>>>  MEGA Tinyjoypad  <<<<
+//                   Programmer: Daniel C 2019-2023
 //             Contact EMAIL: electro_l.i.b@tinyjoypad.com
 //              official website: www.tinyjoypad.com
 //       or  https://sites.google.com/view/arduino-collection
+//    https://github.com/phoenixbozo/TinyJoypad/tree/main/TinyJoypad
 //  MEGA COMPILATION is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -22,11 +17,26 @@ uint16_t FIRMWARE_VERSION=15;
 
 //  You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
+//
+//---------------------------------------------------------------------------------
 //      This COMPILATION uses code created by Roger Buehler
 // Tiny Lander under GPLv3 for ATTINY85  https://github.com/tscha70/ 
 //                  Contact EMAIL: tscha70@gmail.com
-//
+//---------------------------------------------------------------------------------
+// These Libraries used for Mega Tinyjoypad ESP82xx are NOT included in this source code.
+//                  (Refer to the "Library_License.txt" file.)
+//  1- ESP8266WiFi.h  // Copyright (c) 2011-2014 Arduino.  All right reserved.
+//                       Modified by Ivan Grokhotkov, December 2014.
+//  2- Wire.h         // Copyright (c) 2006 Nicholas Zambetti.  All right reserved.
+
+//  3- SSD1306.h      // Copyright (c) 2018 by ThingPulse, Daniel Eichhorn Copyright
+
+//  4- Arduino.h      // Copyright (c) 2005-2013 Arduino Team.  All right reserved.
+
+//  5- avr/pgmspace.h // Copyright (c) 2002-2007  Marek Michalkiewicz Copyright (c) 2006,
+//                       Carlos Lamas Copyright (c) 2009-2010, Jan Waclawek All rights reserved.
+//---------------------------------------------------------------------------------
+
 // ACTUAL GAME LIST
 //  1-Tiny Gilbert (Electro L.I.B)
 //  2-Tiny Trick (Electro L.I.B)
@@ -41,38 +51,37 @@ uint16_t FIRMWARE_VERSION=15;
 // 11-Tiny Plaque (Electro L.I.B)
 // 12-Tiny DDug (Electro L.I.B)
 // 13-Tiny Missile (Electro L.I.B)
-// 14-Tiny Lander by (c)Roger Buehler 2020 GPLv3  https://github.com/tscha70/  Contact EMAIL: tscha70@gmail.com
-// 15-Tiny Morpion (Electro L.I.B)
+// 14-Tiny Morpion (Electro L.I.B)
+// 15-Tiny Pipe (Electro L.I.B)
+// 16-Tiny SQuest (Electro L.I.B) -> NEW (2023)
+// 17-Tiny Lander by (c)Roger Buehler 2020 GPLv3  https://github.com/tscha70/  Contact EMAIL: tscha70@gmail.com
 
-//ACTUAL TOOLS
+// ACTUAL TOOLS
 //  1-SOUND On/Off    => Access by std MENU joystick Down (if you write permanently your choice, push button for 3 sec)
 //  2-clear EEPROM    => Access by std MENU joystick Up (Clear EEPROM = joystick right and push button for 3 sec)
-//  3-CONTROL TESTER  => Access by Startup (power on, after.2 sec press button for 2 sec.
+//  3-CONTROL TESTER  => Access by Startup (power on, after 0.2 sec press button for 2 sec.
 
-//for ESP8266/ESP8285 at 160 Mhz
-//PROGRAM with "LOLIN (WEMOS) D1 mini lite"board for D1 mini lite ESP8266/ESP8285
-//or PROGRAM with "GENERIC ESP82xx MODULE" for generic board
-//Programmer = AVRISP mkii
+//  for ESP8266/ESP8285 at 160 Mhz
+//  PROGRAM with "LOLIN (WEMOS) D1 mini lite"board for D1 mini lite ESP8266/ESP8285
+//   or PROGRAM with "GENERIC ESP82xx MODULE" for generic board
+//  Programmer = AVRISP mkii
 
-#include <ESP8266WiFi.h>
-#include <Wire.h>  
-#include "ESPboyRender.h" 
+const uint16_t FIRMWARE_VERSION=18;
+
 #include "lib/ESPboyInit.h"
 #include "lib/ESPboyInit.cpp"
-//#include "lib/ESPboyTerminalGUI.h"
-//#include "lib/ESPboyTerminalGUI.cpp"
-//#include "lib/ESPboyOTA2.h"
-//#include "lib/ESPboyOTA2.cpp"
-
+#include "ESPboyRender.h"
 
 ESPboyInit myESPboy;
-//ESPboyTerminalGUI *terminalGUIobj = NULL;
-//ESPboyOTA2 *OTA2obj = NULL;
 ESPboyRender display(&myESPboy.tft);
 
 
+#include <ESP8266WiFi.h> // Copyright (c) 2011-2014 Arduino.  All right reserved. Modified by Ivan Grokhotkov, December 2014. (Refer to the "Library_License.txt" file.)
+//#include <Wire.h>        // Copyright (c) 2006 Nicholas Zambetti.  All right reserved.                                        (Refer to the "Library_License.txt" file.)
+//#include "SSD1306.h"     // Copyright (c) 2018 by ThingPulse, Daniel Eichhorn Copyright (c) 2018 by Fabrice Weinberg.         (Refer to the "Library_License.txt" file.)
 #include "MENU_ESP.h"
 #include "TESTMOD/JOY_TESTER_ESP.h"
+
 #include "DATA/TINYMORPION/Tiny-Morpion-ESP.h"
 #include "DATA/TINYMISSILE/Tiny-Missile-ESP.h"
 #include "DATA/TINYDDUG/Tiny-DDug-ESP.h"
@@ -87,14 +96,18 @@ ESPboyRender display(&myESPboy.tft);
 #include "DATA/TINYINVADERS/Tiny_space_invaders-ESP.h"
 #include "DATA/TINYBERT/Tiny-bert-ESP.h"
 #include "DATA/TINYTRIS/tiny-tris-ESP.h"
-#include "DATA/TINYLANDER/tiny-lander-ESP.h" //by (c)Roger Buehler 2020 GPLv3  https://github.com/tscha70/  Contact EMAIL: tscha70@gmail.com
+#include "DATA/TINYLANDER/tiny-lander-ESP.h" //by Roger Buehler (c) 2020 GPLv3  https://github.com/tscha70/  Contact EMAIL: tscha70@gmail.com
+#include "DATA/TINYPIPE/Tiny-Pipe-ESP.h"
+#include "DATA/TINYSQUEST/Tiny-SQuest-ESP.h"
 
 #define FLUID (1.2) //1.3 80mhz
 #define FLUID_SETUP (1.1) //1.3 80mhz
 #define Frame_Rate 12 //30 80 mhz
 #define Frame_Rate_FADE 40 //30 80 mhz
-#define MAX_VIGNETTE 14// 14 for 15 games
+#define SHOW_COMMUNITY 1
 
+//Public Var
+uint8_t MAX_VIGNETTE=16;// 16 for 17 games
 //VAR SLIDE
 uint8_t FADE=8;//0 a 8 fix
 uint8_t Slide_OFF=0;
@@ -103,15 +116,12 @@ uint8_t Slide2=1;
 uint8_t SLIDE_POS;
 //FIN VAR SLIDE
 
-
 void setup() {
-
-//Serial.begin(115200);
 /*
+Serial.begin(115200);
 WiFi.mode( WIFI_OFF );
 WiFi.forceSleepBegin();
-delay( 1 );
-*/
+delay( 1 );*/
 myESPboy.begin("www.tinyjoypad.com");
 
 
@@ -146,26 +156,26 @@ LOAD_Config_EEPROM();
 //SPLASH
 {
 My_delay_ms(1000);
-if (BUTTON_DOWN) {loop_JOYTESTER();}//JOY_TESTER
+if (!SHOW_COMMUNITY) {MAX_VIGNETTE--;}
+if (BUTTON_DOWN) {if (loop_JOYTESTER()) {if (!SHOW_COMMUNITY) {MAX_VIGNETTE++;}}}//JOY_TESTER
 currentMillis=millis();
 for(uint8_t t=0;t<9;t++){
 ESP_SPLASH((t));
 while((currentMillis-MemMillis)<Frame_Rate_FADE){
-ESP.wdtFeed();
 currentMillis=millis();}
 MemMillis=currentMillis;}
-My_delay_ms(2000);}
+My_delay_ms(1000);}
 for(uint8_t t=0;t<9;t++){
 ESP_SPLASH((8-t));}
 currentMillis=millis();
 for(uint8_t t=0;t<9;t++){
 FADEIN_MENU(t);
 while((currentMillis-MemMillis)<Frame_Rate_FADE){
-ESP.wdtFeed();
 currentMillis=millis();
 }
 MemMillis=currentMillis;
 }
+randomSeed(MemMillis);
 MENU:;
 FADE=8;
 while(1){
@@ -183,6 +193,7 @@ if(myESPboy.getKeys()&PAD_LFT) {
   delay(100);}
 
 
+
 if (TINYJOYPAD_RIGHT==0) {Sound_TTRICK(30,10);SLIDE_SHOW(0);SLIDE_DIRECTION(1);}
 if (TINYJOYPAD_LEFT==0) {Sound_TTRICK(30,10);SLIDE_DIRECTION(0);SLIDE_SHOW(1);}
 if (TINYJOYPAD_DOWN==0) {Sound_TTRICK(60,10);CONFIG_SLIDE();}
@@ -193,6 +204,7 @@ for(uint8_t t=0;t<40;t++){
 My_delay_ms(1);
 if (BUTTON_UP) {goto CANCEL;} 
 }
+randomSeed(MemMillis);
 SLIDE_SELECT();
 switch(Slide1){
 case (0):loop_TGILBERT();break;
@@ -208,8 +220,11 @@ case (9):loop_TTRIS();break;
 case (10):loop_TPLAQUE();break;
 case (11):loop_TDDUG();break;
 case (12):loop_TMISSILE();break;
-case (13):loop_TLANDER();break;
-case (14):loop_TMORPION();break;
+case (13):loop_TMORPION();break;
+case (14):loop_TPIPE();break;
+case (15):loop_TSQUEST();break;
+case (16):loop_TLANDER();break;
+
 default:goto CANCEL;break;
 }
 CANCEL:;
