@@ -17,11 +17,10 @@ void ESPboyRender::init(){
 
 
 void ESPboyRender::display(){
-  static uint16_t oBuffer[128*16];
-  bool flagFirstStart = true;
+  static uint16_t oBuffer[128*16] __attribute__ ((aligned(32)));
+  //bool flagFirstStart = true;
   static uint8_t currentDataByte;
   static uint16_t foregroundColor, backgroundColor, xPos, yPos, kPos, kkPos, addr;
-
 
   //foregroundColor = LHSWAP((uint16_t)TFT_YELLOW);
   //backgroundColor = LHSWAP((uint16_t)TFT_BLACK);
@@ -44,7 +43,3 @@ void ESPboyRender::display(){
   }
 };
 
-
-void ESPboyRender::flipScreenVertically(){};
-
-void ESPboyRender::setContrast(uint8_t no){};

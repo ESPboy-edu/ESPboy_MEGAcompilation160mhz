@@ -191,12 +191,12 @@ W_TDDUG[1].INIT_WEAPON();
 
 void LOAD_ENEMY_POS_TDDUG(void){
 #define LevEl_ (GD_DDUG.LEVEL)
-#define w1_ pgm_read_byte(&ENEMY_TDDUG[0+(t_*3)])
-#define w2_ pgm_read_byte(&ENEMY_TDDUG[1+(t_*3)])
-#define w5_ pgm_read_byte(&ENEMY_TDDUG[2+(t_*3)])
+#define ww1_ pgm_read_byte(&ENEMY_TDDUG[0+(t_*3)])
+#define ww2_ pgm_read_byte(&ENEMY_TDDUG[1+(t_*3)])
+#define ww5_ pgm_read_byte(&ENEMY_TDDUG[2+(t_*3)])
 for (uint8_t t_=0;t_<MAX_ENEMY_TDDUG;t_++){
 ENEMY_DDUG[t_].PUT_ACTIVE(0);
-if (pgm_read_byte(&ENEMY_ENABLE_TDDUG[t_+(LevEl_*4)])) ENEMY_DDUG[t_].INIT(w1_,w2_,w5_);
+if (pgm_read_byte(&ENEMY_ENABLE_TDDUG[t_+(LevEl_*4)])) ENEMY_DDUG[t_].INIT(ww1_,ww2_,ww5_);
 }}
 
 void LOAD_LEVEL_TDDUG(uint8_t Lev_){

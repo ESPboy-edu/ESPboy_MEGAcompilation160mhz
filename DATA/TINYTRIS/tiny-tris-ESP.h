@@ -20,7 +20,7 @@
 
 #define TIME_L_PRESS 40//for esp8285 normal 20
 
-#include<EEPROM.h>
+//#include<EEPROM.h>
 #include "spritebank_TTRIS.h"
 #define Frame_rate_TTRIS 6
 //PROTOTYPE
@@ -602,17 +602,17 @@ uint8_t recupe_SCORES_TTRIS(uint8_t xPASS,uint8_t yPASS){
 if (xPASS<95) {return 0;}
 if (xPASS>119){return 0;}
 if (yPASS>1) {return 0;}
-#define M10000 (Scores_TTRIS/10000)
-#define M1000 (((Scores_TTRIS)-(M10000*10000))/1000)
-#define M100 (((Scores_TTRIS)-(M1000*1000)-(M10000*10000))/100)
-#define M10 (((Scores_TTRIS)-(M100*100)-(M1000*1000)-(M10000*10000))/10)
-#define M1 ((Scores_TTRIS)-(M10*10)-(M100*100)-(M1000*1000)-(M10000*10000))
+#define MM10000 (Scores_TTRIS/10000)
+#define MM1000 (((Scores_TTRIS)-(MM10000*10000))/1000)
+#define MM100 (((Scores_TTRIS)-(MM1000*1000)-(MM10000*10000))/100)
+#define MM10 (((Scores_TTRIS)-(MM100*100)-(MM1000*1000)-(MM10000*10000))/10)
+#define MM1 ((Scores_TTRIS)-(MM10*10)-(MM100*100)-(MM1000*1000)-(MM10000*10000))
 return 
-(blitzSprite_TTRIS(95,8,xPASS,yPASS,M10000,police_TTRIS)|
- blitzSprite_TTRIS(99,8,xPASS,yPASS,M1000,police_TTRIS)|
- blitzSprite_TTRIS(103,8,xPASS,yPASS,M100,police_TTRIS)|
- blitzSprite_TTRIS(107,8,xPASS,yPASS,M10,police_TTRIS)|
- blitzSprite_TTRIS(111,8,xPASS,yPASS,M1,police_TTRIS)|
+(blitzSprite_TTRIS(95,8,xPASS,yPASS,MM10000,police_TTRIS)|
+ blitzSprite_TTRIS(99,8,xPASS,yPASS,MM1000,police_TTRIS)|
+ blitzSprite_TTRIS(103,8,xPASS,yPASS,MM100,police_TTRIS)|
+ blitzSprite_TTRIS(107,8,xPASS,yPASS,MM10,police_TTRIS)|
+ blitzSprite_TTRIS(111,8,xPASS,yPASS,MM1,police_TTRIS)|
  blitzSprite_TTRIS(115,8,xPASS,yPASS,0,police_TTRIS));
 }
 
@@ -669,7 +669,6 @@ DEPLACEMENT_YY_TTRIS=0;
 }
 
 void recupe_HIGHSCORE_TTRIS(void){
-EEPROM.begin(512);
 if (EEPROM.read(10)!=0b10101010){goto ED;}
 Level_TTRIS=EEPROM.read(0);
 Nb_of_line_F_TTRIS=(EEPROM.read(1)<<8);
@@ -684,7 +683,6 @@ ED:;
 
 void save_HIGHSCORE_TTRIS(void){
 uint8_t TMP;
-EEPROM.begin(512);
 EEPROM.write(0,Level_TTRIS);
 TMP=Nb_of_line_F_TTRIS>>8;
 EEPROM.write(1,TMP);
@@ -699,7 +697,6 @@ EEPROM.commit();
 }
 
 void Check_NEW_RECORD(void){
-EEPROM.begin(512);
 if ((Scores_TTRIS>uint16_t((EEPROM.read(3)<<8)|(EEPROM.read(4))))||(EEPROM.read(10)!=0b10101010)) {
 save_HIGHSCORE_TTRIS(); 
 }}

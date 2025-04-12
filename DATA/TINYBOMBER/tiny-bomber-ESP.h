@@ -420,10 +420,10 @@ uint8_t PrintLive_TBOMBER(uint8_t x,uint8_t y){
 uint8_t rest=0xFF;
 if ((x>7)||(x<1)) return 0xFF;
 switch (live_TBOMBER){
-  case 0:if (y==6) rest=0x00;
-  case 1:if (y==5) rest=0x00;
-  case 2:if (y==4) rest=0x00;
-  case 3:
+  case 0:if (y==6) rest=0x00;// FALLTHROUGH
+  case 1:if (y==5) rest=0x00;// FALLTHROUGH
+  case 2:if (y==4) rest=0x00;// FALLTHROUGH
+  case 3:// FALLTHROUGH
   default:break;
 }return rest;}
 

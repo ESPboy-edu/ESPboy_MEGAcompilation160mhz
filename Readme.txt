@@ -1,6 +1,6 @@
-//    >>>>>  MEGA COMPILATION 0018 for ESP8266/ESP8285  GPL v3 <<<<
+//    >>>>>  MEGA COMPILATION 0025 for ESP8266/ESP8285  GPL v3 <<<<
 //                    >>>>>  MEGA Tinyjoypad  <<<<
-//                   Programmer: Daniel C 2019-2023
+//                   Programmer: Daniel C 2019-2025
 //             Contact EMAIL: electro_l.i.b@tinyjoypad.com
 //              official website: www.tinyjoypad.com
 //       or  https://sites.google.com/view/arduino-collection
@@ -38,21 +38,42 @@
 //---------------------------------------------------------------------------------
 
 // ACTUAL GAME LIST
-//  1-Tiny Gilbert (Electro L.I.B)
-//  2-Tiny Trick (Electro L.I.B)
-//  3-Tiny Space Invaders (Electro L.I.B)
-//  4-Tiny Pinball (Electro L.I.B)
-//  5-Tiny Pacman (Electro L.I.B)
-//  6-Tiny Bomber (Electro L.I.B)
-//  7-Tiny Bike (Electro L.I.B)
-//  8-Tiny Bert (Electro L.I.B)
-//  9-Tiny Arkanoid (Electro L.I.B)
-// 10-Tiny Tris (Electro L.I.B)
-// 11-Tiny Plaque (Electro L.I.B)
-// 12-Tiny DDug (Electro L.I.B)
-// 13-Tiny Missile (Electro L.I.B)
-// 14-Tiny Morpion (Electro L.I.B)
-// 15-Tiny Pipe (Electro L.I.B)
-// 16-Tiny SQuest (Electro L.I.B) -> NEW (2023)
-// 17-Tiny Lander by (c)Roger Buehler 2020 GPLv3  https://github.com/tscha70/  Contact EMAIL: tscha70@gmail.com
+//  1-Tiny Lander by (c)Roger Buehler 2020 GPLv3  https://github.com/tscha70/  Contact EMAIL: tscha70@gmail.com
+//  2-Tiny Gilbert (Electro L.I.B)
+//  3-Tiny Trick (Electro L.I.B)
+//  4-Tiny Space Invaders (Electro L.I.B)
+//  5-Tiny Pinball (Electro L.I.B)
+//  6-Tiny Pacman (Electro L.I.B)
+//  7-Tiny Bomber (Electro L.I.B)
+//  8-Tiny Bike (Electro L.I.B)
+//  9-Tiny Bert (Electro L.I.B)
+//  10-Tiny Arkanoid (Electro L.I.B)
+//  11-Tiny Tris (Electro L.I.B)
+//  12-Tiny Plaque (Electro L.I.B)
+//  13-Tiny DDug (Electro L.I.B)
+//  14-Tiny Missile (Electro L.I.B)
+//  15-Tiny Morpion (Electro L.I.B)
+//  16-Tiny Pipe (Electro L.I.B)
+//  17-Tiny SQuest (Electro L.I.B)
+//  18-Ardumania (Electro L.I.B) v1.3
+//  19-Nohzdyve (Electro L.I.B) 
+//  20-Gilbert in the Downland (Electro L.I.B) -> NEW (2025)
+//  21-Tiny-Doc (Electro L.I.B) -> NEW (2025)
+
+// ACTUAL FONCTION
+//----------------
+//  1-SOUND On/Off    => Access by std MENU, key Down (if you write permanently your choice, push button for 3 sec)
+//                     -> New feature for adjusting contrast: In the audio menu, press the up key and push the action button
+//                        to adjust the desired contrast level. The contrast level is automatically saved in the audio settings at the same time.
+
+//  2-clear EEPROM    => Access by std MENU, key Up (Clear EEPROM => key right and push the action button for 3 sec)
+//                     -> New feature to delete the backup of a specific game: select the game, open the EEPROM menu with the up key,
+//                       then press the right key and while holding down the right key, press the action button for 3 seconds to erase the backup.
+
+//  3-CONTROL TESTER  => Access by Startup (power on, after 0.2 sec press button for 2 sec.
+
+//  for ESP8266/ESP8285 at 160 Mhz
+//  PROGRAM with "LOLIN (WEMOS) D1 mini lite"board for D1 mini lite ESP8266/ESP8285
+//   or PROGRAM with "GENERIC ESP82xx MODULE" for generic board
+//  Programmer = AVRISP mkii
 

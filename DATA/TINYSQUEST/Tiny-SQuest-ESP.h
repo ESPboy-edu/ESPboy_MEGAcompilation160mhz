@@ -90,7 +90,7 @@ ESP.wdtFeed();
       Timer_1 = 0;
       SQUEST.SUBSOLO_X = (SQUEST.Level > 3) ? SQUEST.SUBSOLO_X - 1 : -60;
       switch (SQUEST.Main_SPK_Bank) {
-        case 0:Refresh_Anim_TSQUEST();
+        case 0:Refresh_Anim_TSQUEST();// FALLTHROUGH
         case 1:Refresh_Main_Anim_TSQUEST();Step2_counter_TSQUEST(SQUEST.Main_SPK_Bank);break;
         case 2: Step3_counter_TSQUEST(); break;
         default: break;
@@ -447,9 +447,10 @@ void LIBERATE_LINE_TSQUEST(uint8_t Line_) {
   uint8_t Line_use = LINE_TSQUEST(Line_);
   MAKE_LINE_TSQUEST(&A_, &B_, &C_);
   switch (SQUEST.Amount_Sprite) {
-    case (3): Other_Sprite[(Line_Temp + 2)].ACTIVE_SPRITE_INIT(C_, P_TSQUEST(Direction_, 2), Line_use, ActualSpeed);
-    case (2): Other_Sprite[(Line_Temp + 1)].ACTIVE_SPRITE_INIT(B_, P_TSQUEST(Direction_, 1), Line_use, ActualSpeed);
+    case (3): Other_Sprite[(Line_Temp + 2)].ACTIVE_SPRITE_INIT(C_, P_TSQUEST(Direction_, 2), Line_use, ActualSpeed);// FALLTHROUGH
+    case (2): Other_Sprite[(Line_Temp + 1)].ACTIVE_SPRITE_INIT(B_, P_TSQUEST(Direction_, 1), Line_use, ActualSpeed);// FALLTHROUGH
     case (1): Other_Sprite[Line_Temp].ACTIVE_SPRITE_INIT(A_, P_TSQUEST(Direction_, 0), Line_use, ActualSpeed); break;
+
     default: break;
   }
 }
@@ -763,7 +764,7 @@ uint8_t Recupe_SUBsolo_TSQUEST(uint8_t xPASS, uint8_t yPASS) {
 }
 
 void RENDER_TSQUEST(void) {
-  uint8_t y, x;
+  uint8_t y=0, x=0;
   for (x = 0; x < 128; x++) {
   display.buffer[(x+(y*128))]=(FullDisplayRefresh_TSQUEST(FlipFlop1, FlipFlop2, x, 0) & pgm_read_byte(&BACKGROUND_TSQUEST[x + ((0)*128)]));
   }
@@ -815,9 +816,9 @@ uint8_t Recupe_Diver_TSQUEST(uint8_t xPASS) {
   Config_Display_Diver_TSQUEST(&Dive_A, &Dive_B);
   switch (xPASS) {
     case  0 ... 32 :
-      if (xPASS > Dive_A) { return 0xFF; }
+      if (xPASS > Dive_A) { return 0xFF; }// FALLTHROUGH
     case 92 ... 124:
-      if (xPASS > Dive_B) { return 0xFF; }
+      if (xPASS > Dive_B) { return 0xFF; }// FALLTHROUGH
       ByTe_ = pgm_read_byte(&Display_DIVER_TSQUEST[Counter_Display_Diver]);
       Counter_Display_Diver = (Counter_Display_Diver < 10) ? Counter_Display_Diver + 1 : 0;
       return ByTe_;

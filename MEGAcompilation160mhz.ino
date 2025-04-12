@@ -1,6 +1,6 @@
-//    >>>>>  MEGA COMPILATION 0018 for ESP8266/ESP8285  GPL v3 <<<<
+//    >>>>>  MEGA COMPILATION 0025 for ESP8266/ESP8285  GPL v3 <<<<
 //                    >>>>>  MEGA Tinyjoypad  <<<<
-//                   Programmer: Daniel C 2019-2023
+//                   Programmer: Daniel C 2019-2025
 //             Contact EMAIL: electro_l.i.b@tinyjoypad.com
 //              official website: www.tinyjoypad.com
 //       or  https://sites.google.com/view/arduino-collection
@@ -10,7 +10,7 @@
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-//  This program is distributed in the hope that it will be useful,
+//  This program is distributsed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU General Public License for more details.
@@ -38,27 +38,38 @@
 //---------------------------------------------------------------------------------
 
 // ACTUAL GAME LIST
-//  1-Tiny Gilbert (Electro L.I.B)
-//  2-Tiny Trick (Electro L.I.B)
-//  3-Tiny Space Invaders (Electro L.I.B)
-//  4-Tiny Pinball (Electro L.I.B)
-//  5-Tiny Pacman (Electro L.I.B)
-//  6-Tiny Bomber (Electro L.I.B)
-//  7-Tiny Bike (Electro L.I.B)
-//  8-Tiny Bert (Electro L.I.B)
-//  9-Tiny Arkanoid (Electro L.I.B)
-// 10-Tiny Tris (Electro L.I.B)
-// 11-Tiny Plaque (Electro L.I.B)
-// 12-Tiny DDug (Electro L.I.B)
-// 13-Tiny Missile (Electro L.I.B)
-// 14-Tiny Morpion (Electro L.I.B)
-// 15-Tiny Pipe (Electro L.I.B)
-// 16-Tiny SQuest (Electro L.I.B) -> NEW (2023)
-// 17-Tiny Lander by (c)Roger Buehler 2020 GPLv3  https://github.com/tscha70/  Contact EMAIL: tscha70@gmail.com
+//  1-Tiny Lander by (c)Roger Buehler 2020 GPLv3  https://github.com/tscha70/  Contact EMAIL: tscha70@gmail.com
+//  2-Tiny Gilbert (Electro L.I.B)
+//  3-Tiny Trick (Electro L.I.B)
+//  4-Tiny Space Invaders (Electro L.I.B)
+//  5-Tiny Pinball (Electro L.I.B)
+//  6-Tiny Pacman (Electro L.I.B)
+//  7-Tiny Bomber (Electro L.I.B)
+//  8-Tiny Bike (Electro L.I.B)
+//  9-Tiny Bert (Electro L.I.B)
+//  10-Tiny Arkanoid (Electro L.I.B)
+//  11-Tiny Tris (Electro L.I.B)
+//  12-Tiny Plaque (Electro L.I.B)
+//  13-Tiny DDug (Electro L.I.B)
+//  14-Tiny Missile (Electro L.I.B)
+//  15-Tiny Morpion (Electro L.I.B)
+//  16-Tiny Pipe (Electro L.I.B)
+//  17-Tiny SQuest (Electro L.I.B)
+//  18-Ardumania (Electro L.I.B) v1.3
+//  19-Nohzdyve (Electro L.I.B) 
+//  20-Gilbert in the Downland (Electro L.I.B) -> NEW (2025)
+//  21-Tiny-Doc (Electro L.I.B) -> NEW (2025)
 
-// ACTUAL TOOLS
-//  1-SOUND On/Off    => Access by std MENU joystick Down (if you write permanently your choice, push button for 3 sec)
-//  2-clear EEPROM    => Access by std MENU joystick Up (Clear EEPROM = joystick right and push button for 3 sec)
+// ACTUAL FONCTION
+//----------------
+//  1-SOUND On/Off    => Access by std MENU, key Down (if you write permanently your choice, push button for 3 sec)
+//                     -> New feature for adjusting contrast: In the audio menu, press the up key and push the action button
+//                        to adjust the desired contrast level. The contrast level is automatically saved in the audio settings at the same time.
+
+//  2-clear EEPROM    => Access by std MENU, key Up (Clear EEPROM => key right and push the action button for 3 sec)
+//                     -> New feature to delete the backup of a specific game: select the game, open the EEPROM menu with the up key,
+//                       then press the right key and while holding down the right key, press the action button for 3 seconds to erase the backup.
+
 //  3-CONTROL TESTER  => Access by Startup (power on, after 0.2 sec press button for 2 sec.
 
 //  for ESP8266/ESP8285 at 160 Mhz
@@ -66,7 +77,13 @@
 //   or PROGRAM with "GENERIC ESP82xx MODULE" for generic board
 //  Programmer = AVRISP mkii
 
-const uint16_t FIRMWARE_VERSION=18;
+const uint16_t FIRMWARE_VERSION=25;
+
+#include <ESP8266WiFi.h> // Copyright (c) 2011-2014 Arduino.  All right reserved. Modified by Ivan Grokhotkov, December 2014. (Refer to the "Library_License.txt" file.)
+#include <ESP_EEPROM.h>
+
+//#include <Wire.h>        // Copyright (c) 2006 Nicholas Zambetti.  All right reserved.                                        (Refer to the "Library_License.txt" file.)
+//#include "SSD1306.h"     // Copyright (c) 2018 by ThingPulse, Daniel Eichhorn Copyright (c) 2018 by Fabrice Weinberg.         (Refer to the "Library_License.txt" file.)
 
 #include "lib/ESPboyInit.h"
 #include "lib/ESPboyInit.cpp"
@@ -75,13 +92,8 @@ const uint16_t FIRMWARE_VERSION=18;
 ESPboyInit myESPboy;
 ESPboyRender display(&myESPboy.tft);
 
-
-#include <ESP8266WiFi.h> // Copyright (c) 2011-2014 Arduino.  All right reserved. Modified by Ivan Grokhotkov, December 2014. (Refer to the "Library_License.txt" file.)
-//#include <Wire.h>        // Copyright (c) 2006 Nicholas Zambetti.  All right reserved.                                        (Refer to the "Library_License.txt" file.)
-//#include "SSD1306.h"     // Copyright (c) 2018 by ThingPulse, Daniel Eichhorn Copyright (c) 2018 by Fabrice Weinberg.         (Refer to the "Library_License.txt" file.)
 #include "MENU_ESP.h"
 #include "TESTMOD/JOY_TESTER_ESP.h"
-
 #include "DATA/TINYMORPION/Tiny-Morpion-ESP.h"
 #include "DATA/TINYMISSILE/Tiny-Missile-ESP.h"
 #include "DATA/TINYDDUG/Tiny-DDug-ESP.h"
@@ -99,6 +111,10 @@ ESPboyRender display(&myESPboy.tft);
 #include "DATA/TINYLANDER/tiny-lander-ESP.h" //by Roger Buehler (c) 2020 GPLv3  https://github.com/tscha70/  Contact EMAIL: tscha70@gmail.com
 #include "DATA/TINYPIPE/Tiny-Pipe-ESP.h"
 #include "DATA/TINYSQUEST/Tiny-SQuest-ESP.h"
+#include "DATA/ARDUMANIA/Ardumania-ESP.h" //Ardumania has been adapted from the official version on arduboy. The audio library has not been carried over, so the sounds are different from the original.
+#include "DATA/NOHZDYVE/Nohzdyve-ESP.h" //Nohzdyve has been adapted from the official version on arduboy. The audio library has not been carried over, so the sounds are different from the original.
+#include "DATA/GILBERTINTHEDOWNLAND/GilbertintheDownland-ESP.h" //Gilbert in the Downland has been adapted from the official version on arduboy.
+#include "DATA/TINYDOC/TinyDoc-ESP.h"
 
 #define FLUID (1.2) //1.3 80mhz
 #define FLUID_SETUP (1.1) //1.3 80mhz
@@ -106,22 +122,26 @@ ESPboyRender display(&myESPboy.tft);
 #define Frame_Rate_FADE 40 //30 80 mhz
 #define SHOW_COMMUNITY 1
 
+
+
 //Public Var
-uint8_t MAX_VIGNETTE=16;// 16 for 17 games
+uint8_t MAX_VIGNETTE=20;// 16 for 17 games
 //VAR SLIDE
-uint8_t FADE=8;//0 a 8 fix
+uint8_t 
+FADE_ESP=8;//0 a 8 fix
 uint8_t Slide_OFF=0;
-uint8_t Slide1=0;
-uint8_t Slide2=1;
+uint8_t Slide1=1;
+uint8_t Slide2=2;
 uint8_t SLIDE_POS;
+uint8_t Contrast;
 //FIN VAR SLIDE
 
 void setup() {
-/*
-Serial.begin(115200);
+//Serial.begin(115200);
 WiFi.mode( WIFI_OFF );
 WiFi.forceSleepBegin();
-delay( 1 );*/
+//delay( 1 );
+
 myESPboy.begin("www.tinyjoypad.com");
 
 
@@ -131,10 +151,13 @@ myESPboy.begin("www.tinyjoypad.com");
 //     OTA2obj = new ESPboyOTA2(terminalGUIobj);
 //}
 
+
 ESP.wdtDisable();
 ESP.wdtFeed();
-delay( 1 );
+disableWatchdog(); // Désactiver les deux WDT (soft et hard)
+
 /*
+delay( 1 );
 pinMode(PIN_,OUTPUT);
 pinMode(PIN_START_BUTTON,INPUT_PULLUP);
 pinMode(PIN_RIGHT_BUTTON,INPUT_PULLUP);
@@ -142,16 +165,31 @@ pinMode(PIN_DOWN_BUTTON,INPUT_PULLUP);
 pinMode(PIN_LEFT_BUTTON,INPUT_PULLUP);
 pinMode(PIN_UP_BUTTON,INPUT_PULLUP);
 */
+
  display.init();
  display.flipScreenVertically();
- display.setContrast(255);
+ display.setContrast(Contrast);
+
+ EEPROM.begin(512);
+ /*
+ EEPROM using Location
+
+ -> tiny-tris (0-10)
+ 
+ -> ARDUMANIA  (11-21)
+
+ -> Audio Setting (9)
+
+ -> Contrast Setting (22)
+
+ */
 }
 
 void loop() {
 ESP.wdtDisable();
 ESP.wdtFeed();
-Serial.println("Mega Compilation");
-Serial.println("  Start MENU");
+//Serial.println("Mega Compilation");
+//Serial.println("  Start MENU");
 LOAD_Config_EEPROM();
 //SPLASH
 {
@@ -177,8 +215,9 @@ MemMillis=currentMillis;
 }
 randomSeed(MemMillis);
 MENU:;
-FADE=8;
+FADE_ESP=8;
 while(1){
+ESP.wdtDisable();
 ESP.wdtFeed();
 
 if(myESPboy.getKeys()&PAD_RGT) {
@@ -193,43 +232,60 @@ if(myESPboy.getKeys()&PAD_LFT) {
   delay(100);}
 
 
-
 if (TINYJOYPAD_RIGHT==0) {Sound_TTRICK(30,10);SLIDE_SHOW(0);SLIDE_DIRECTION(1);}
 if (TINYJOYPAD_LEFT==0) {Sound_TTRICK(30,10);SLIDE_DIRECTION(0);SLIDE_SHOW(1);}
 if (TINYJOYPAD_DOWN==0) {Sound_TTRICK(60,10);CONFIG_SLIDE();}
-if (TINYJOYPAD_UP==0) {Sound_TTRICK(60,10);EEPROM_SLIDE();}
+if ((TINYJOYPAD_UP==0)&&(Check_EEPROM_Slide(Slide1))) {Sound_TTRICK(60,10);EEPROM_SLIDE();}
 ESP_MENU();
 if (BUTTON_DOWN) {
 for(uint8_t t=0;t<40;t++){
 My_delay_ms(1);
 if (BUTTON_UP) {goto CANCEL;} 
 }
+
 randomSeed(MemMillis);
 SLIDE_SELECT();
 switch(Slide1){
-case (0):loop_TGILBERT();break;
-case (1):loop_TTRICK();break;
-case (2):loop_TINVADERS();break;
-case (3):loop_TPINBALL();break;
-case (4):loop_TPACMAN();break;
-case (5):loop_TBOMBER();break;
-case (6):loop_TBIKE();break;
-case (7):loop_TBERT();break;
-case (8):loop_TARKANOID();break;
-case (9):loop_TTRIS();break;
-case (10):loop_TPLAQUE();break;
-case (11):loop_TDDUG();break;
-case (12):loop_TMISSILE();break;
-case (13):loop_TMORPION();break;
-case (14):loop_TPIPE();break;
-case (15):loop_TSQUEST();break;
-case (16):loop_TLANDER();break;
 
+case (0):loop_TLANDER();break;
+case (1):loop_TGILBERT();break;
+case (2):loop_TTRICK();break;
+case (3):loop_TINVADERS();break;
+case (4):loop_TPINBALL();break;
+case (5):loop_TPACMAN();break;
+case (6):loop_TBOMBER();break;
+case (7):loop_TBIKE();break;
+case (8):loop_TBERT();break;
+case (9):loop_TARKANOID();break;
+case (10):loop_TTRIS();break;
+case (11):loop_TPLAQUE();break;
+case (12):loop_TDDUG();break;
+case (13):loop_TMISSILE();break;
+case (14):loop_TMORPION();break;
+case (15):loop_TPIPE();break;
+case (16):loop_TSQUEST();break;
+case (17):loop_ARDUMANIA();break;
+case (18):loop_NOHZDYVE();break;
+case (19):loop_GILBERTINTHEDOWNLAND();break;
+case (20):loop_TDOC();break;
 default:goto CANCEL;break;
 }
 CANCEL:;
 }}
 goto MENU;
+}
+
+void disableWatchdog() {
+  ESP.wdtDisable();           // Désactive le WDT logiciel
+  *((volatile uint32_t*)0x60000900) &= ~(1); // Désactive le WDT matériel (registre spécifique ESP8266/ESP8285)
+}
+
+uint8_t Check_EEPROM_Slide(uint8_t Val_){
+  switch(Val_){
+   case 10:
+   case 17:return 1;break;
+   default:return 0;break;
+  }
 }
 
 void FADEIN_MENU(uint8_t FRm){
@@ -241,7 +297,7 @@ for (x = 0; x < 128; x++){
 if ((x%2)==0) {
 RETURN_BYTE_MENU=pgm_read_byte(&MENU_FADE[(FRm*2)]);}else{
 RETURN_BYTE_MENU=pgm_read_byte(&MENU_FADE[(FRm*2)+1]);}
-display.buffer[(x+(y*128))]=blitzSprite(0,0,x,y,0,MENU_VIGNETTE)&RETURN_BYTE_MENU;
+display.buffer[(x+(y*128))]=blitzSprite(0,0,x,y,Slide1,MENU_VIGNETTE)&RETURN_BYTE_MENU;
 }}
 display.display();   
 }
@@ -268,8 +324,8 @@ while((currentMillis-MemMillis)<Frame_Rate_FADE){
 currentMillis=millis();
 }
 MemMillis=currentMillis;
-if (FADE==0) {FADE=8;goto ENDING;}
-FADE=(FADE>0)?FADE-1:0; 
+if (FADE_ESP==0) {FADE_ESP=8;goto ENDING;}
+FADE_ESP=(FADE_ESP>0)?FADE_ESP-1:0; 
 }
 ENDING:;
 My_delay_ms(1000);
@@ -280,7 +336,7 @@ uint8_t y=0;
 uint8_t x=0; 
 for (y = 0; y < 8; y++){   
 for (x = 0; x < 128; x++){
-display.buffer[(x+(y*128))] =( (blitzSprite(0,FRm,x,y,0,SETUP))|((blitzSprite(0,0,x,y,Slide1*2,MENU_VIGNETTE))&(0xff-blitzSprite(0,FRm,x,y,1,SETUP))));
+display.buffer[(x+(y*128))] =( (blitzSprite(0,FRm,x,y,0,SETUP))|((blitzSprite(0,0,x,y,Slide1,MENU_VIGNETTE))&(0xff-blitzSprite(0,FRm,x,y,1,SETUP))));
 }}
 display.display();  
 }
@@ -306,14 +362,28 @@ ESP_CONFIG_FLIP(Speed_0);
 if (Speed_0>0) {Speed_0=Speed_0/FLUID_SETUP;}else{break;}
 }
 My_delay_ms(33);
-do {}while(TINYJOYPAD_DOWN==0);
+do {ESP.wdtDisable();
+ESP.wdtFeed();}while(TINYJOYPAD_DOWN==0);
 My_delay_ms(33);
-do {}while(TINYJOYPAD_DOWN==0);
+do {ESP.wdtDisable();
+ESP.wdtFeed();}while(TINYJOYPAD_DOWN==0);
 while(1){
+ESP.wdtDisable();
 ESP.wdtFeed();
 if (TINYJOYPAD_DOWN==0) {if (Switch==1) {SOUND_ON_OFF=(Pos_TrackBar==50)?HIGH:LOW;goto END;}}
 if (TINYJOYPAD_RIGHT==0) {Switch=2;}
 if (TINYJOYPAD_LEFT==0)  {Switch=0;}
+if (TINYJOYPAD_UP==0) {
+while((TINYJOYPAD_UP==0)||(BUTTON_DOWN)){
+ESP.wdtDisable();
+ESP.wdtFeed();
+ESP_CONFIG_CONTRAST_FLIP();
+
+My_delay_ms(11);
+if (BUTTON_DOWN) {
+  if (Contrast<255) {Contrast++;if ((Contrast==255)||(Contrast==1)){My_delay_ms(300);}}else{Contrast=0;}
+  display.setContrast(Contrast);
+  }}}
 if (BUTTON_DOWN) {
 if (Switch==1) {
 for (LOOP=0;LOOP<50;LOOP++) {
@@ -340,10 +410,32 @@ MemMillis=currentMillis;
 END:;
 Speed_0=64;
 while(1){
+ESP.wdtDisable();
+ESP.wdtFeed();
 ESP_CONFIG_FLIP(64-Speed_0); 
 if (Speed_0>0) {Speed_0=Speed_0/FLUID_SETUP;}else {break;}
 }
-while(TINYJOYPAD_DOWN==0){}
+while(TINYJOYPAD_DOWN==0){ESP.wdtDisable();
+ESP.wdtFeed();}
+}
+
+uint8_t RecupContrast(uint8_t x,uint8_t y){
+  //14-114
+uint8_t ContVal=map(Contrast,0,255,14,114);
+if (y==2) {
+if ((x>13)&&(x<ContVal)) return 0b11000011;
+}
+return 0xff;
+}
+
+void ESP_CONFIG_CONTRAST_FLIP(void){
+uint8_t y=0;
+uint8_t x=0; 
+for (y = 0; y < 8; y++){   
+for (x = 0; x < 128; x++){
+display.buffer[(x+(y*128))] =((blitzSprite(0,0,x,y,0,Contrast_Pic))&(RecupContrast(x,y)));
+}}
+display.display();  
 }
 
 void SAVE_FLIP(uint8_t FRm){
@@ -368,7 +460,7 @@ uint8_t y=0;
 uint8_t x=0; 
 for (y = 0; y < 8; y++){   
 for (x = 0; x < 128; x++){
-display.buffer[(x+(y*128))] =( (blitzSprite(0,FRm,x,y,0,CLEAR_EEPROM))|((blitzSprite(0,0,x,y,Slide1*2,MENU_VIGNETTE))&(0xff-blitzSprite(0,FRm,x,y,1,CLEAR_EEPROM))));
+display.buffer[(x+(y*128))] =( (blitzSprite(0,FRm,x,y,0,CLEAR_EEPROM))|((blitzSprite(0,0,x,y,Slide1,MENU_VIGNETTE))&(0xff-blitzSprite(0,FRm,x,y,1,CLEAR_EEPROM))));
 }}
 display.display();  
 }
@@ -393,10 +485,10 @@ ESP_EEPROM_FLIP((64-Speed_0)-64);
 if (Speed_0>0) {Speed_0=Speed_0/FLUID_SETUP;}else{break;}
 }
 My_delay_ms(33);
-do {}while(TINYJOYPAD_UP==0);
-My_delay_ms(33);
-do {}while(TINYJOYPAD_UP==0);
+do {ESP.wdtDisable();
+ESP.wdtFeed();}while(TINYJOYPAD_UP==0);
 while(1){
+ESP.wdtDisable();
 ESP.wdtFeed();
 if (TINYJOYPAD_UP==0) {goto END;}
 if (TINYJOYPAD_RIGHT==0) {TRIG_=1;}else{TRIG_=0;}
@@ -418,10 +510,13 @@ ESP_EEPROM_SET(TRIG_);
 END:;
 Speed_0=64;
 while(1){
+  ESP.wdtDisable();
+ESP.wdtFeed();
 ESP_EEPROM_FLIP(Speed_0-64); 
 if (Speed_0>0) {Speed_0=Speed_0/FLUID_SETUP;}else {break;}
 }
-while(TINYJOYPAD_UP==0){}
+while(TINYJOYPAD_UP==0){ESP.wdtDisable();
+ESP.wdtFeed();}
 }
 
 void EEPROM_CLEAR_FLIP(void){
@@ -441,32 +536,40 @@ display.display();
 
 void WRITE_CLEAR_EEPROM(void){
 uint8_t t;
-EEPROM.begin(512);
-for (t=0;t<11;t++){
-EEPROM.write(t,0);
+switch(Slide1){
+//tiny-tris (0-10)
+case 9:for (t=0;t<11;t++){EEPROM.write(t,0);}break;
+
+//ARDUMANIA  (11-21)
+case 16:for (t=11;t<22;t++){EEPROM.write(t,0);}break;
+default:break;
 }
+//Reset Audio Setting (9) (0=OFF/1=ON)
+//EEPROM.write(9,1);
+//SOUND_ON_OFF=HIGH;
 EEPROM.commit();
 }
 
 void LOAD_Config_EEPROM(void){
 uint8_t TMP;
-EEPROM.begin(512);
 TMP=EEPROM.read(9);
+Contrast=EEPROM.read(22);
+display.setContrast(Contrast);
 if (TMP>0) {SOUND_ON_OFF=HIGH;}else{SOUND_ON_OFF=LOW;}
 }
 
 void save_Config_EEPROM(void){
-EEPROM.begin(512);
-if (EEPROM.read(9)==SOUND_ON_OFF) {goto END;}
 EEPROM.write(9,SOUND_ON_OFF);
+EEPROM.write(22,Contrast);
 EEPROM.commit();
-END:;
 }
 
 void SLIDE_SHOW(uint8_t Direct){
 if (Direct==0) {SLIDE_POS=127;}else{SLIDE_POS=0;}
 float Speed_0=128;
 while(1){
+  ESP.wdtDisable();
+ESP.wdtFeed();
 Slide_OFF=1;
 if (Direct==1) {if (SLIDE_POS<127) {SLIDE_POS=(128-Speed_0); }else {SLIDE_POS=128;goto STOP;}}else{if ((SLIDE_POS)>0) {SLIDE_POS=Speed_0;} else {SLIDE_POS=0;goto STOP;}}
 Speed_0=Speed_0/FLUID;
@@ -522,15 +625,15 @@ uint8_t Recupe(uint8_t xPASS,uint8_t yPASS){
 uint8_t BYTE_0;
 uint8_t SHADE;
 uint8_t Y_POSSITION=map(SLIDE_POS,0,128,0,64);
-if ((xPASS%2)==0) {SHADE=pgm_read_byte(&MENU_FADE[FADE*2]);}else{SHADE=pgm_read_byte(&MENU_FADE[(FADE*2)+1]);}
+if ((xPASS%2)==0) {SHADE=pgm_read_byte(&MENU_FADE[FADE_ESP*2]);}else{SHADE=pgm_read_byte(&MENU_FADE[(FADE_ESP*2)+1]);}
 if (Slide_OFF==0) {
 BYTE_0=0x00;
 Y_POSSITION=64;
 SLIDE_POS=128;
 }else{
-BYTE_0=blitzSprite(SLIDE_POS,Y_POSSITION,xPASS,yPASS,Slide2*2,MENU_VIGNETTE);
+BYTE_0=blitzSprite(SLIDE_POS,Y_POSSITION,xPASS,yPASS,Slide2,MENU_VIGNETTE);
 }
-return  SHADE&(((blitzSprite(SLIDE_POS-128,64-Y_POSSITION,xPASS,yPASS,Slide1*2,MENU_VIGNETTE))|(BYTE_0)));
+return  SHADE&(((blitzSprite(SLIDE_POS-128,64-Y_POSSITION,xPASS,yPASS,Slide1,MENU_VIGNETTE))|(BYTE_0)));
 }
 
 uint8_t recupe_VERSION_MEGA(uint8_t xPASS,uint8_t yPASS){
