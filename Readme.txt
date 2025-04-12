@@ -1,3 +1,8 @@
+#ESPboy port of tinyjoypad mega compilation v025!
+www.espboy.com
+www.tinyjoypad.com
+
+
 //    >>>>>  MEGA COMPILATION 0025 for ESP8266/ESP8285  GPL v3 <<<<
 //                    >>>>>  MEGA Tinyjoypad  <<<<
 //                   Programmer: Daniel C 2019-2025
