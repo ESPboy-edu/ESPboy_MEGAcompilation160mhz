@@ -35,7 +35,7 @@ private:
 public:
   uint8_t foregroundclr = 14;
   uint8_t backgroundclr = 0;
-  uint8_t buffer[BUFZISE] __attribute__((aligned(4)));
+  uint8_t buffer[BUFZISE] __attribute__((aligned(32)));
   ESPboyRender(TFT_eSPI *tftparameter);
   void init();
   void flipScreenVertically(){};
